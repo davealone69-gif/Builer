@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ui.components.ModuleTabRow
+import com.example.ui.components.SettingsDialog
 import com.example.ui.components.TopHeaderBar
 import com.example.ui.modules.ApkAuditorModule
 import com.example.ui.modules.DevatorLabModule
@@ -64,10 +65,21 @@ fun BuilderAppScreen(
   // Knowledge States
   val bookmarks by viewModel.bookmarks.collectAsStateWithLifecycle()
 
-  // Gemini AI States
+  // Settings & Keystore States
+  val showSettingsDialog by viewModel.showSettingsDialog.collectAsStateWithLifecycle()
+  val keystoreAlias by viewModel.keystoreAlias.collectAsStateWithLifecycle()
+  val keystorePass by viewModel.keystorePass.collectAsStateWithLifecycle()
+  val buildVariant by viewModel.buildVariant.collectAsStateWithLifecycle()
+
+  // Gemini AI & App Builder States
   val chatMessages by viewModel.chatMessages.collectAsStateWithLifecycle()
   val aiLoading by viewModel.aiLoading.collectAsStateWithLifecycle()
   val userApiKey by viewModel.userApiKey.collectAsStateWithLifecycle()
+  val builderPrompt by viewModel.builderPrompt.collectAsStateWithLifecycle()
+  val isBuildingApp by viewModel.isBuildingApp.collectAsStateWithLifecycle()
+  val buildLogs by viewModel.buildLogs.collectAsStateWithLifecycle()
+  val generatedAppSpec by viewModel.generatedAppSpec.collectAsStateWithLifecycle()
+  val apkArtifact by viewModel.apkArtifact.collectAsStateWithLifecycle()
 
   // Free AI States
   val freeAiInput by viewModel.freeAiInput.collectAsStateWithLifecycle()
@@ -78,6 +90,20 @@ fun BuilderAppScreen(
   val imgHeight by viewModel.imgHeight.collectAsStateWithLifecycle()
   val aspectRatioResult by viewModel.aspectRatioResult.collectAsStateWithLifecycle()
 
+  if (showSettingsDialog) {
+    SettingsDialog(
+        userApiKey = userApiKey,
+        keystoreAlias = keystoreAlias,
+        keystorePass = keystorePass,
+        buildVariant = buildVariant,
+        onApiKeyChanged = { viewModel.updateUserApiKey(it) },
+        onKeystoreAliasChanged = { viewModel.updateKeystoreAlias(it) },
+        onKeystorePassChanged = { viewModel.updateKeystorePass(it) },
+        onBuildVariantChanged = { viewModel.updateBuildVariant(it) },
+        onDismiss = { viewModel.toggleSettingsDialog(false) }
+    )
+  }
+
   Scaffold(
       modifier = Modifier.fillMaxSize()
   ) { innerPadding ->
@@ -86,7 +112,9 @@ fun BuilderAppScreen(
             .fillMaxSize()
             .padding(innerPadding)
     ) {
-      TopHeaderBar()
+      TopHeaderBar(
+          onOpenSettings = { viewModel.toggleSettingsDialog(true) }
+      )
       ModuleTabRow(
           selectedTabIndex = selectedTabIndex,
           onTabSelected = { viewModel.selectTab(it) }
@@ -126,8 +154,15 @@ fun BuilderAppScreen(
             chatMessages = chatMessages,
             isLoading = aiLoading,
             apiKeySetting = userApiKey,
+            builderPrompt = builderPrompt,
+            isBuildingApp = isBuildingApp,
+            buildLogs = buildLogs,
+            generatedAppSpec = generatedAppSpec,
+            apkArtifact = apkArtifact,
             onApiKeyChanged = { viewModel.updateUserApiKey(it) },
-            onSendPrompt = { viewModel.sendGeminiPrompt(it) }
+            onSendPrompt = { viewModel.sendGeminiPrompt(it) },
+            onBuilderPromptChanged = { viewModel.updateBuilderPrompt(it) },
+            onGenerateAndBuildApp = { viewModel.generateAndBuildFullApp(it) }
         )
         6 -> FreeAiModule(
             input = freeAiInput,

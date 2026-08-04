@@ -19,7 +19,9 @@ import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Speed
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -51,7 +53,9 @@ val MODULE_TABS = listOf(
 )
 
 @Composable
-fun TopHeaderBar() {
+fun TopHeaderBar(
+    onOpenSettings: () -> Unit = {}
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -82,17 +86,31 @@ fun TopHeaderBar() {
                 )
             }
         }
-        Text(
-            text = "v1.0.0",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .background(
-                    MaterialTheme.colorScheme.primaryContainer,
-                    shape = MaterialTheme.shapes.extraSmall
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "v1.0.0",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .background(
+                        MaterialTheme.colorScheme.primaryContainer,
+                        shape = MaterialTheme.shapes.extraSmall
+                    )
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            IconButton(
+                onClick = onOpenSettings,
+                modifier = Modifier.testTag("open_settings_header_btn")
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "Settings Menu",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                .padding(horizontal = 8.dp, vertical = 4.dp)
-        )
+            }
+        }
     }
 }
 
