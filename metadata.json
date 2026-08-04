@@ -1,0 +1,6 @@
+{
+  "name": "Builder",
+  "description": "Comprehensive mobile AI and developer engineering suite for Android featuring Matrix Core, Devator Lab, Evaluator, MandelaCore, Knowledge Base, Gemini AI, Free AI, Image Tools, and APK Auditor.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
