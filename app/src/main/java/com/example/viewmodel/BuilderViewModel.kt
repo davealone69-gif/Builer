@@ -75,6 +75,30 @@ class BuilderViewModel(application: Application) : AndroidViewModel(application)
     val ramUsage: StateFlow<Float> = _ramUsage.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            knowledgeRepository.addBookmark(
+                BookmarkEntity(
+                    title = "Android Developers Portal",
+                    category = "Android Docs",
+                    content = "Official Android Developers documentation, Jetpack Compose guides, SDK reference & API docs. Website: https://developer.android.com/"
+                )
+            )
+            knowledgeRepository.addBookmark(
+                BookmarkEntity(
+                    title = "ZenML MLOps Framework",
+                    category = "MLOps",
+                    content = "Extensible open-source MLOps framework for production ML pipelines. Website: https://www.zenml.io/"
+                )
+            )
+            knowledgeRepository.addBookmark(
+                BookmarkEntity(
+                    title = "ByteByteGo System Design",
+                    category = "System Design",
+                    content = "System Design & Software Architecture reference guide. Website: https://bytebytego.com/"
+                )
+            )
+        }
+
         // Start telemetry tick loop
         viewModelScope.launch(Dispatchers.Default) {
             while (true) {

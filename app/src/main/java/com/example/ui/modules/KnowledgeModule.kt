@@ -47,6 +47,24 @@ data class KnowledgeTopic(
 
 val KNOWLEDGE_TOPICS = listOf(
     KnowledgeTopic(
+        title = "Android Developers Portal",
+        category = "Android Docs",
+        summary = "Official Google Android Developers documentation, API references, Jetpack guidelines, and Kotlin guides (https://developer.android.com/).",
+        details = "Comprehensive guides on Jetpack Compose, Android SDK, Gradle configurations, Material Design 3, App Architecture, and official API documentation. Website: https://developer.android.com/"
+    ),
+    KnowledgeTopic(
+        title = "ZenML MLOps Framework",
+        category = "MLOps",
+        summary = "Extensible, open-source MLOps framework for building production machine learning pipelines (https://www.zenml.io/).",
+        details = "ZenML connects data stacks, model registries, training tools, and cloud orchestration into reproducible ML workflows. Website: https://www.zenml.io/"
+    ),
+    KnowledgeTopic(
+        title = "ByteByteGo System Design",
+        category = "System Design",
+        summary = "Comprehensive system design diagrams, architectural patterns, and scalability courses (https://bytebytego.com/).",
+        details = "ByteByteGo covers distributed systems, high availability, microservices, database sharding, caching strategies, and technical architecture. Website: https://bytebytego.com/"
+    ),
+    KnowledgeTopic(
         title = "Jetpack Compose State Management",
         category = "Compose",
         summary = "Best practices for state hoisting, MutableStateFlow, and collectAsStateWithLifecycle.",
