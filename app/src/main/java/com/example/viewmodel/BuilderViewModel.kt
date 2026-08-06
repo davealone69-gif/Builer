@@ -8,6 +8,7 @@ import com.example.data.db.AiLogEntity
 import com.example.data.db.AppDatabase
 import com.example.data.db.BookmarkEntity
 import com.example.data.db.CodeSnippetEntity
+import com.example.data.remote.GeminiAgentHelper
 import com.example.data.remote.GeminiRestApi
 import com.example.data.repository.AiLogRepository
 import com.example.data.repository.DevatorRepository
@@ -267,8 +268,9 @@ class BuilderViewModel(application: Application) : AndroidViewModel(application)
         _aiLoading.value = true
 
         viewModelScope.launch {
-            val response = GeminiRestApi.generateContent(
+            val response = GeminiAgentHelper.queryGeminiAgent(
                 prompt = prompt,
+                role = GeminiAgentHelper.AgentRole.ANDROID_ARCHITECT,
                 customApiKey = _userApiKey.value
             )
             _aiLoading.value = false

@@ -53,6 +53,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.ui.components.ApiKeyGeneratorCard
 import com.example.viewmodel.ApkArtifactSpec
 import com.example.viewmodel.ChatMessage
 import com.example.viewmodel.GeneratedAppSpec
@@ -444,31 +445,10 @@ private fun ChatAssistantView(
         }
 
         if (showApiKeySettings) {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
-            ) {
-                Column(
-                    modifier = Modifier.padding(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = "Custom Gemini API Key Override (Optional)",
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    OutlinedTextField(
-                        value = apiKeySetting,
-                        onValueChange = onApiKeyChanged,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .testTag("gemini_key_input"),
-                        label = { Text("Enter API Key") },
-                        placeholder = { Text("AI Studio automatically injects key if present") },
-                        singleLine = true
-                    )
-                }
-            }
+            ApiKeyGeneratorCard(
+                currentApiKey = apiKeySetting,
+                onApiKeyGenerated = onApiKeyChanged
+            )
         }
 
         // Chat History

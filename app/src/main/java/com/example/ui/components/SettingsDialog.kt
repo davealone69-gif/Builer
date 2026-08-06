@@ -92,41 +92,11 @@ fun SettingsDialog(
                     }
                 }
 
-                // API Key Section
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(14.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Default.Key, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                text = "API Key Management",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-
-                        OutlinedTextField(
-                            value = userApiKey,
-                            onValueChange = onApiKeyChanged,
-                            label = { Text("Gemini / Custom API Key") },
-                            placeholder = { Text("Defaults to BuildConfig.GEMINI_API_KEY") },
-                            modifier = Modifier.fillMaxWidth().testTag("setting_api_key_input"),
-                            singleLine = true
-                        )
-
-                        Text(
-                            text = "• Injected via Secrets Panel / .env file\n• BuildConfig.GEMINI_API_KEY verified",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
+                // API Key Section & Generator
+                ApiKeyGeneratorCard(
+                    currentApiKey = userApiKey,
+                    onApiKeyGenerated = onApiKeyChanged
+                )
 
                 // APK Signing & Keystore Settings
                 Card(
