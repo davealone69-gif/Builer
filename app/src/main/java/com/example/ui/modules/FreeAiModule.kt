@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.ui.components.HuggingFaceHubCard
 
 @Composable
 fun FreeAiModule(
@@ -135,5 +136,7 @@ fun FreeAiModule(
                 }
             }
         }
+
+        HuggingFaceHubCard(userApiKey = "")
     }
 }

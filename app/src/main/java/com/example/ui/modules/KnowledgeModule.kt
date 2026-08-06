@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.data.db.BookmarkEntity
+import com.example.ui.components.HuggingFaceHubCard
 
 data class KnowledgeTopic(
     val title: String,
@@ -51,6 +52,12 @@ val KNOWLEDGE_TOPICS = listOf(
         category = "Android Docs",
         summary = "Official Google Android Developers documentation, API references, Jetpack guidelines, and Kotlin guides (https://developer.android.com/).",
         details = "Comprehensive guides on Jetpack Compose, Android SDK, Gradle configurations, Material Design 3, App Architecture, and official API documentation. Website: https://developer.android.com/"
+    ),
+    KnowledgeTopic(
+        title = "Hugging Face Platform & Open AI Hub",
+        category = "AI / ML Docs",
+        summary = "Hugging Face ecosystem documentation, open-weight models, datasets, spaces, and serverless inference API (https://huggingface.co/docs).",
+        details = "Hugging Face provides open-source machine learning models (Llama, Qwen, Mistral, Gemma, DeepSeek), datasets, spaces, transformers library, and serverless inference APIs. Official docs: https://huggingface.co/docs"
     ),
     KnowledgeTopic(
         title = "ZenML MLOps Framework",
@@ -120,6 +127,11 @@ fun KnowledgeModule(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
+        }
+
+        // Hugging Face AI Docs & Hub Card
+        item {
+            HuggingFaceHubCard(userApiKey = "")
         }
 
         // Search Field
