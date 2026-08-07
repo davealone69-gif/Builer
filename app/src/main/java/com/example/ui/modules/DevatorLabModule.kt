@@ -41,6 +41,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.data.db.CodeSnippetEntity
 
+import com.example.ui.components.AgentEcosystemOsCard
+
 @Composable
 fun DevatorLabModule(
     inputCode: String,
@@ -64,10 +66,15 @@ fun DevatorLabModule(
     ) {
         item {
             Text(
-                text = "Devator Lab — Developer Toolkit",
+                text = "Devator Lab — Developer Toolkit & Agent OS",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
+        }
+
+        // Agent Ecosystem OS Command Centre Board
+        item {
+            AgentEcosystemOsCard()
         }
 
         // Code Editor Input Area

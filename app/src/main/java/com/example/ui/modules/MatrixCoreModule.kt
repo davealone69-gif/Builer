@@ -39,6 +39,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+import com.example.ui.components.AgentEcosystemOsCard
+
 @Composable
 fun MatrixCoreModule(
     cpuUsage: Float,
@@ -57,10 +59,13 @@ fun MatrixCoreModule(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Matrix Core — System Telemetry",
+            text = "Matrix Core — System Telemetry & Agent OS",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
+
+        // Agent Ecosystem OS Command Centre
+        AgentEcosystemOsCard()
 
         // Telemetry Meters Card
         Card(
