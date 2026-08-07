@@ -35,21 +35,25 @@ jobs:
 
     - name: Inject API keys from GitHub Secrets (optional)
       run: |
-        # Creates a local .env from secrets so the secrets-gradle-plugin can pick them up
-        # Add these secrets in repo Settings → Secrets and variables → Actions:
-        #   GEMINI_API_KEY, HF_TOKEN / HUGGINGFACE_TOKEN, etc.
+        # Creates a local .env from secrets so the secrets-gradle-plugin can pick them up.
+        # Add secrets in: Settings → Secrets and variables → Actions
+        # Supported: GEMINI_API_KEY, HUGGINGFACE_TOKEN, GROQ_API_KEY
         touch .env
-        if [ -n "${{ secrets.GEMINI_API_KEY }}" ]; then
-          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+        if [ -n "$GEMINI_API_KEY" ]; then
+          echo "GEMINI_API_KEY=$GEMINI_API_KEY" >> .env
         fi
-        if [ -n "${{ secrets.HUGGINGFACE_TOKEN }}" ]; then
-          echo "HUGGINGFACE_TOKEN=${{ secrets.HUGGINGFACE_TOKEN }}" >> .env
-          echo "HF_TOKEN=${{ secrets.HUGGINGFACE_TOKEN }}" >> .env
+        if [ -n "$HUGGINGFACE_TOKEN" ]; then
+          echo "HUGGINGFACE_TOKEN=$HUGGINGFACE_TOKEN" >> .env
+          echo "HF_TOKEN=$HUGGINGFACE_TOKEN" >> .env
         fi
-        if [ -n "${{ secrets.GROQ_API_KEY }}" ]; then
-          echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" >> .env
+        if [ -n "$GROQ_API_KEY" ]; then
+          echo "GROQ_API_KEY=$GROQ_API_KEY" >> .env
         fi
-        echo ".env created (keys injected if secrets exist)"
+        echo ".env ready"
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug --stacktrace
@@ -60,26 +64,3 @@ jobs:
         name: builder-debug-apk
         path: app/build/outputs/apk/debug/*.apk
         if-no-files-found: warn
-
-    - name: Build Release APK (if signing secrets present)
-      if: ${{ secrets.STORE_PASSWORD != '' && secrets.KEY_PASSWORD != '' }}
-      env:
-        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        KEYSTORE_PATH: ${{ runner.temp }}/upload-keystore.jks
-      run: |
-        # Decode keystore from secret (base64) if provided
-        if [ -n "${{ secrets.KEYSTORE_BASE64 }}" ]; then
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$KEYSTORE_PATH"
-          ./gradlew assembleRelease --stacktrace
-        else
-          echo "No KEYSTORE_BASE64 secret — skipping signed release build"
-        fi
-
-    - name: Upload Release APK
-      if: ${{ secrets.STORE_PASSWORD != '' }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: builder-release-apk
-        path: app/build/outputs/apk/release/*.apk
-        if-no-files-found: ignore
