@@ -31,6 +31,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.ui.components.HuggingFaceHubCard
+import com.example.ui.components.OllamaCard
+import com.example.ui.components.OpenRouterCard
 
 @Composable
 fun FreeAiModule(
@@ -138,5 +140,7 @@ fun FreeAiModule(
         }
 
         HuggingFaceHubCard(userApiKey = "")
+        OpenRouterCard()
+        OllamaCard()
     }
 }

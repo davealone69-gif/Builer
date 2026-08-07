@@ -53,7 +53,20 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.filled.Cloud
+import androidx.compose.material.icons.filled.GraphicEq
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.MusicNote
+import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material3.ScrollableTabRow
 import com.example.ui.components.ApiKeyGeneratorCard
+import com.example.ui.components.FirebaseAuthFirestoreCard
+import com.example.ui.components.GeminiImageStudioCard
+import com.example.ui.components.GeminiIntelligenceCard
+import com.example.ui.components.GeminiLiveVoiceCard
+import com.example.ui.components.LyriaMusicStudioCard
+import com.example.ui.components.VeoVideoStudioCard
 import com.example.viewmodel.ApkArtifactSpec
 import com.example.viewmodel.ChatMessage
 import com.example.viewmodel.GeneratedAppSpec
@@ -82,10 +95,11 @@ fun GeminiAiModule(
             .testTag("gemini_ai_module"),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        // Tab Row for App Builder vs Chat Assistant
-        TabRow(
+        // Scrollable Tab Row for All AI & Build Capabilities
+        ScrollableTabRow(
             selectedTabIndex = subTabIndex,
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            edgePadding = 8.dp
         ) {
             Tab(
                 selected = subTabIndex == 0,
@@ -102,37 +116,97 @@ fun GeminiAiModule(
             Tab(
                 selected = subTabIndex == 1,
                 onClick = { subTabIndex = 1 },
-                modifier = Modifier.testTag("tab_ai_chat"),
+                modifier = Modifier.testTag("tab_ai_intelligence"),
                 text = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AutoAwesome, contentDescription = null)
+                        Icon(Icons.Default.Psychology, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
-                        Text("AI Assistant Chat")
+                        Text("Gemini Intelligence")
+                    }
+                }
+            )
+            Tab(
+                selected = subTabIndex == 2,
+                onClick = { subTabIndex = 2 },
+                modifier = Modifier.testTag("tab_media_studio"),
+                text = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Default.MusicNote, contentDescription = null)
+                        Spacer(Modifier.width(6.dp))
+                        Text("Media Studio (Lyria/Veo/Image)")
+                    }
+                }
+            )
+            Tab(
+                selected = subTabIndex == 3,
+                onClick = { subTabIndex = 3 },
+                modifier = Modifier.testTag("tab_live_voice_firebase"),
+                text = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Default.GraphicEq, contentDescription = null)
+                        Spacer(Modifier.width(6.dp))
+                        Text("Live Voice & Firebase")
                     }
                 }
             )
         }
 
-        if (subTabIndex == 0) {
-            // App Builder Prompt & APK Engine View
-            AppBuilderPromptView(
-                builderPrompt = builderPrompt,
-                isBuildingApp = isBuildingApp,
-                buildLogs = buildLogs,
-                generatedAppSpec = generatedAppSpec,
-                apkArtifact = apkArtifact,
-                onPromptChanged = onBuilderPromptChanged,
-                onGenerateAndBuild = onGenerateAndBuildApp
-            )
-        } else {
-            // Chat Assistant View
-            ChatAssistantView(
-                chatMessages = chatMessages,
-                isLoading = isLoading,
-                apiKeySetting = apiKeySetting,
-                onApiKeyChanged = onApiKeyChanged,
-                onSendPrompt = onSendPrompt
-            )
+        when (subTabIndex) {
+            0 -> {
+                // App Builder Prompt & APK Engine View
+                AppBuilderPromptView(
+                    builderPrompt = builderPrompt,
+                    isBuildingApp = isBuildingApp,
+                    buildLogs = buildLogs,
+                    generatedAppSpec = generatedAppSpec,
+                    apkArtifact = apkArtifact,
+                    onPromptChanged = onBuilderPromptChanged,
+                    onGenerateAndBuild = onGenerateAndBuildApp
+                )
+            }
+            1 -> {
+                // Multi-Turn Intelligence & Reasoning View
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    GeminiIntelligenceCard()
+                    ChatAssistantView(
+                        chatMessages = chatMessages,
+                        isLoading = isLoading,
+                        apiKeySetting = apiKeySetting,
+                        onApiKeyChanged = onApiKeyChanged,
+                        onSendPrompt = onSendPrompt
+                    )
+                }
+            }
+            2 -> {
+                // Media Studio: Lyria Music, Veo Video, Gemini Image Studio
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    LyriaMusicStudioCard()
+                    VeoVideoStudioCard()
+                    GeminiImageStudioCard()
+                }
+            }
+            3 -> {
+                // Live Voice API & Firebase Auth / Firestore
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    GeminiLiveVoiceCard()
+                    FirebaseAuthFirestoreCard()
+                }
+            }
         }
     }
 }

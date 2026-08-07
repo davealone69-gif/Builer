@@ -64,6 +64,10 @@ enum class ApiKeyType(val displayName: String, val prefix: String, val descripti
     GEMINI_API("Gemini / Google AI Studio", "AIzaSy", "Standard Google AI Studio API Key format"),
     BUILDER_LIVE("Builder Production Key", "builder_live_", "Live API key for production app service"),
     BUILDER_SANDBOX("Builder Dev / Sandbox Key", "builder_test_", "Isolated test key for devator lab testing"),
+    HUGGING_FACE("Hugging Face Token", "hf_", "Hugging Face User Access Token format"),
+    OPEN_ROUTER("OpenRouter API Key", "sk-or-v1-", "OpenRouter multi-model LLM router key format"),
+    OLLAMA_KEY("Ollama API Key / Auth Token", "ollama_sk_", "Ollama local / cloud server API key format"),
+    X_API_KEY("X-API-KEY Header", "xkey_", "Custom X-API-KEY header token format"),
     HMAC_SECRET("Hmac SHA-256 Secret", "sec_key_", "256-bit cryptographic signing key")
 }
 

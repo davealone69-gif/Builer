@@ -37,7 +37,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.data.db.BookmarkEntity
+import com.example.ui.components.AndroidPackageIndexCard
 import com.example.ui.components.HuggingFaceHubCard
+import com.example.ui.components.QuickShareInspectorCard
 
 data class KnowledgeTopic(
     val title: String,
@@ -47,6 +49,18 @@ data class KnowledgeTopic(
 )
 
 val KNOWLEDGE_TOPICS = listOf(
+    KnowledgeTopic(
+        title = "Samsung Quick Share Link Sharing",
+        category = "Cloud & Sharing",
+        summary = "Samsung Cloud Quick Share file sharing service and link protocol (quickshare.samsungcloud.com).",
+        details = "Samsung Quick Share Cloud allows sharing large files, build artifacts, media, and APKs via encrypted temporary URLs (quickshare.samsungcloud.com/TOKEN). Links remain valid for up to 48 hours and can be parsed directly in Android apps using HTTPS clients."
+    ),
+    KnowledgeTopic(
+        title = "Android API Package Reference Index",
+        category = "Android Docs",
+        summary = "Comprehensive listing of all official Android SDK API packages (https://developer.android.com/reference/packages).",
+        details = "The Package Index on developer.android.com organizes all Android SDK packages alphabetically. Key namespaces include android.* (os, app, content, view, widget, hardware, graphics, net), androidx.* (Jetpack Compose, lifecycle, room, work, navigation, core), and standard runtime APIs (kotlinx.coroutines, java.net, javax.crypto). URL: https://developer.android.com/reference/packages"
+    ),
     KnowledgeTopic(
         title = "Android Developers Portal",
         category = "Android Docs",
@@ -132,6 +146,16 @@ fun KnowledgeModule(
         // Hugging Face AI Docs & Hub Card
         item {
             HuggingFaceHubCard(userApiKey = "")
+        }
+
+        // Android API Reference Package Index Card
+        item {
+            AndroidPackageIndexCard()
+        }
+
+        // Quick Share Link Inspector Card
+        item {
+            QuickShareInspectorCard()
         }
 
         // Search Field

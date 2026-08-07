@@ -113,6 +113,7 @@ object HuggingFaceApi {
 
         if (token.isNotBlank()) {
             requestBuilder.header("Authorization", "Bearer $token")
+            requestBuilder.header("X-API-KEY", token)
         }
 
         try {
@@ -148,6 +149,7 @@ object HuggingFaceApi {
 
         if (token.isNotBlank()) {
             directReqBuilder.header("Authorization", "Bearer $token")
+            directReqBuilder.header("X-API-KEY", token)
         }
 
         try {

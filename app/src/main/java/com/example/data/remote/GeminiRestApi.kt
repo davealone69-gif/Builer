@@ -47,6 +47,7 @@ object GeminiRestApi {
 
         val request = Request.Builder()
             .url(url)
+            .header("X-API-KEY", apiKey)
             .post(jsonBody.toString().toRequestBody("application/json".toMediaType()))
             .build()
 
